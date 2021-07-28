@@ -11,26 +11,26 @@ namespace DAL.Repositories
 {
     public class VehicleTypeRepository : BaseRepository, IRepository<VehicleType>
     {
-        private const string queryCreate = "INSERT INTO VehicleTypes (Name, TaxCoefficient)" +
+        private const string QueryCreate = "INSERT INTO VehicleTypes (Name, TaxCoefficient)" +
             " VALUES(@Name, @TaxCoefficient)";
-        private const string queryDelete = "DELETE FROM VehicleTypes WHERE VehicleTypeId = @Id";
-        private const string queryGetAll = "SELECT * FROM VehicleTypes";
-        private const string queryGetById = "SELECT * FROM VehicleTypes WHERE VehicleTypeId = @Id";
-        private const string queryUpdate = "UPDATE VehicleTypes SET Name = @Name, TaxCoefficient = @TaxCoefficient "
-                                       + "WHERE VehicleTypeId = @Id";
+        private const string QueryDelete = "DELETE FROM VehicleTypes WHERE VehicleTypeId = @VehicleTypeId";
+        private const string QueryGetAll = "SELECT * FROM VehicleTypes";
+        private const string QueryGetById = "SELECT * FROM VehicleTypes WHERE VehicleTypeId = @VehicleTypeId";
+        private const string QueryUpdate = "UPDATE VehicleTypes SET Name = @Name, TaxCoefficient = @TaxCoefficient "
+                                       + "WHERE VehicleTypeId = @VehicleTypeId";
 
         public VehicleTypeRepository(string connectionString):base(connectionString) { }
 
-        public void Create(VehicleType item) => connection.ExecuteAsync(queryCreate, item);
+        public async Task Create(VehicleType item) => await connection.ExecuteAsync(QueryCreate, item);
 
-        public void Delete(int id) => connection.ExecuteAsync(queryDelete, id);
+        public async Task Delete(int id) => await connection.ExecuteAsync(QueryDelete, id);
 
         public async Task<IEnumerable<VehicleType>> GetAll() =>
-            await connection.QueryAsync<VehicleType>(queryGetAll);
+            await connection.QueryAsync<VehicleType>(QueryGetAll);
 
         public async Task<VehicleType> GetById(int id) =>
-            await connection.QueryFirstAsync<VehicleType>(queryGetById, id);
+            await connection.QueryFirstAsync<VehicleType>(QueryGetById, id);
 
-        public void Update(VehicleType item) => connection.ExecuteAsync(queryUpdate, item);
+        public async Task Update(VehicleType item) => await connection.ExecuteAsync(QueryUpdate, item);
     }
 }

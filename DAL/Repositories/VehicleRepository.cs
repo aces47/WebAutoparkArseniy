@@ -11,20 +11,20 @@ namespace DAL.Repositories
 {
     public class VehicleRepository : BaseRepository, IRepository<Vehicle>
     {
-        private const string queryCreate = "INSERT INTO Vehicles (" +
+        private const string QueryCreate = "INSERT INTO Vehicles (" +
             "VehicleTypeId, ModelName, StateNumber, ManufactureYear, Mileage, Weight, EngineType," +
             "EngineCapacity, EngineConsumption, TankCapacity, Color)" +
             "VALUES(" +
             "@VehicleTypeId, @ModelName, @StateNumber, @ManufactureYear, @Mileage, @Weight, @EngineType," +
             "@EngineCapacity, @EngineConsumption, @TankCapacity, @Color";
 
-        private const string queryDelete = "DELETE FROM Vehicles WHERE VehicleId = @Id";
+        private const string QueryDelete = "DELETE FROM Vehicles WHERE VehicleId = @VehicleId";
 
-        private const string queryGetAll = "SELECT * FROM Vehicles";
+        private const string QueryGetAll = "SELECT * FROM Vehicles";
 
-        private const string queryGetById = "SELECT * FROM Vehicles WHERE VehicleId = @Id";
+        private const string QueryGetById = "SELECT * FROM Vehicles WHERE VehicleId = @VehicleId";
 
-        private const string queryUpdate = "UPDATE Vehicles SET" +
+        private const string QueryUpdate = "UPDATE Vehicles SET" +
             "VehicleTypeId = @VehicleTypeId," +
             "ModelName = @ModelName," +
             "StateNumber = @StateNumber," +
@@ -36,17 +36,17 @@ namespace DAL.Repositories
             "EngineConsumption = @EngineConsumption," +
             "TankCapacity = @TankCapacity," +
             "Color = @Color" +
-            "WHERE VehicleId = @Id";
+            "WHERE VehicleId = @VehicleId";
         public VehicleRepository(string connectionString) : base(connectionString) { }
 
-        public void Create(Vehicle item) => connection.ExecuteAsync(queryCreate, item);
+        public async Task Create(Vehicle item) => await connection.ExecuteAsync(QueryCreate, item);
 
-        public void Delete(int id) => connection.ExecuteAsync(queryDelete, id);
+        public async Task Delete(int id) => await connection.ExecuteAsync(QueryDelete, id);
 
-        public async Task<IEnumerable<Vehicle>> GetAll() => await connection.QueryAsync<Vehicle>(queryGetAll);
+        public async Task<IEnumerable<Vehicle>> GetAll() => await connection.QueryAsync<Vehicle>(QueryGetAll);
 
-        public async Task<Vehicle> GetById(int id) => await connection.QueryFirstAsync<Vehicle>(queryGetById, id);
+        public async Task<Vehicle> GetById(int id) => await connection.QueryFirstAsync<Vehicle>(QueryGetById, id);
 
-        public void Update(Vehicle item) => connection.ExecuteAsync(queryUpdate, item);
+        public async Task Update(Vehicle item) => await connection.ExecuteAsync(QueryUpdate, item);
     }
 }

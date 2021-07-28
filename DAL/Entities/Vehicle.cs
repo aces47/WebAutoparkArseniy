@@ -12,7 +12,7 @@ namespace DAL.Entities
         private const int _taxMultiplier = 30;
         private const double _weightCoefficient = 0.0013;
 
-        public int Id { get; set; }
+        public int VehicleId { get; set; }
         public int VehicleTypeId { get; set; }
         public VehicleType VehicleType { get; set; }
         public string ModelName { get; set; }

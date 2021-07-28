@@ -8,7 +8,7 @@ namespace DAL.Entities
 {
     public class Detail
     {
-        public int Id { get; set; }
+        public int DetailId { get; set; }
         public string Name { get; set; }
     }
 }
