@@ -8,6 +8,9 @@ using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using DAL.Entities;
+using DAL.Repositories;
+using DAL.Interfaces;
 
 namespace WebAutopark
 {
@@ -23,6 +26,12 @@ namespace WebAutopark
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            string connectionString = Configuration.GetConnectionString("DefaultConnection");
+            services.AddTransient<IRepository<OrderElement>, OrderElementsRepository>(provider => new OrderElementsRepository(connectionString));
+            services.AddTransient<IRepository<VehicleType>, VehicleTypeRepository>(provider => new VehicleTypeRepository(connectionString));
+            services.AddTransient<IRepository<Vehicle>, VehicleRepository>(provider => new VehicleRepository(connectionString));
+            services.AddTransient<IRepository<Detail>, DetailRepository>(provider => new DetailRepository(connectionString));
+            services.AddTransient<IRepository<Order>, OrderRepository>(provider => new OrderRepository(connectionString));
             services.AddControllersWithViews();
         }
 
