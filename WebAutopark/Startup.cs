@@ -27,11 +27,11 @@ namespace WebAutopark
         public void ConfigureServices(IServiceCollection services)
         {
             string connectionString = Configuration.GetConnectionString("DefaultConnection");
-            services.AddTransient<IRepository<OrderElement>, OrderElementsRepository>(provider => new OrderElementsRepository(connectionString));
-            services.AddTransient<IRepository<VehicleType>, VehicleTypeRepository>(provider => new VehicleTypeRepository(connectionString));
-            services.AddTransient<IRepository<Vehicle>, VehicleRepository>(provider => new VehicleRepository(connectionString));
-            services.AddTransient<IRepository<Detail>, DetailRepository>(provider => new DetailRepository(connectionString));
-            services.AddTransient<IRepository<Order>, OrderRepository>(provider => new OrderRepository(connectionString));
+            services.AddScope<IRepository<OrderElement>, OrderElementsRepository>(provider => new OrderElementsRepository(connectionString));
+            services.AddScope<IRepository<VehicleType>, VehicleTypeRepository>(provider => new VehicleTypeRepository(connectionString));
+            services.AddScope<IRepository<Vehicle>, VehicleRepository>(provider => new VehicleRepository(connectionString));
+            services.AddScope<IRepository<Detail>, DetailRepository>(provider => new DetailRepository(connectionString));
+            services.AddScope<IRepository<Order>, OrderRepository>(provider => new OrderRepository(connectionString));
             services.AddControllersWithViews();
         }
 
