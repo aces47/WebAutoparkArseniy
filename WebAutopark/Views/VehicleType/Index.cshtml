@@ -1,0 +1,44 @@
+﻿@model IEnumerable<DAL.Entities.VehicleType>
+
+@{
+    ViewData["Title"] = "WebAutopark|Vehicle Type List";
+}
+
+<h1>Vehicle type list</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                    @Html.DisplayNameFor(model => model.Name)
+            </th>
+            <th>
+                    @Html.DisplayNameFor(model => model.TaxCoefficient)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td hidden>
+                    @Html.HiddenFor(modelItem => item.VehicleTypeId)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.TaxCoefficient)
+                </td>
+                <td>
+                    @Html.ActionLink("Edit", "Update", new { id = item.VehicleTypeId }) |
+                    @Html.ActionLink("Delete", "Delete", new { id = item.VehicleTypeId })
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
