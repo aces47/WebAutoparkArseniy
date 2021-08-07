@@ -11,6 +11,7 @@ using Microsoft.Extensions.Hosting;
 using DAL.Entities;
 using DAL.Repositories;
 using DAL.Interfaces;
+using System.Globalization;
 
 namespace WebAutopark
 {
@@ -27,11 +28,11 @@ namespace WebAutopark
         public void ConfigureServices(IServiceCollection services)
         {
             string connectionString = Configuration.GetConnectionString("DefaultConnection");
-            services.AddTransient<IRepository<OrderElement>, OrderElementsRepository>(provider => new OrderElementsRepository(connectionString));
-            services.AddTransient<IRepository<VehicleType>, VehicleTypeRepository>(provider => new VehicleTypeRepository(connectionString));
-            services.AddTransient<IRepository<Vehicle>, VehicleRepository>(provider => new VehicleRepository(connectionString));
-            services.AddTransient<IRepository<Detail>, DetailRepository>(provider => new DetailRepository(connectionString));
-            services.AddTransient<IRepository<Order>, OrderRepository>(provider => new OrderRepository(connectionString));
+            services.AddScoped<IRepository<OrderElement>, OrderElementRepository>(provider => new OrderElementRepository(connectionString));
+            services.AddScoped<IRepository<VehicleType>, VehicleTypeRepository>(provider => new VehicleTypeRepository(connectionString));
+            services.AddScoped<IRepository<Vehicle>, VehicleRepository>(provider => new VehicleRepository(connectionString));
+            services.AddScoped<IRepository<Detail>, DetailRepository>(provider => new DetailRepository(connectionString));
+            services.AddScoped<IRepository<Order>, OrderRepository>(provider => new OrderRepository(connectionString));
             services.AddControllersWithViews();
         }
 
@@ -48,6 +49,10 @@ namespace WebAutopark
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
+            app.UseRequestLocalization();
+            var cultureInfo = new CultureInfo("en-US");
+            CultureInfo.DefaultThreadCurrentCulture = cultureInfo;
+            CultureInfo.DefaultThreadCurrentUICulture = cultureInfo;
 
             app.UseHttpsRedirection();
             app.UseStaticFiles();
