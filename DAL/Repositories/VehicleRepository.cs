@@ -18,11 +18,11 @@ namespace DAL.Repositories
             "@VehicleTypeId, @ModelName, @StateNumber, @ManufactureYear, @Mileage, @Weight, @EngineType," +
             "@EngineCapacity, @EngineConsumption, @TankCapacity, @Color";
 
-        private const string QueryDelete = "DELETE FROM Vehicles WHERE VehicleId = @VehicleId";
+        private const string QueryDelete = "DELETE FROM Vehicles WHERE VehicleId = @id";
 
         private const string QueryGetAll = "SELECT * FROM Vehicles";
 
-        private const string QueryGetById = "SELECT * FROM Vehicles WHERE VehicleId = @VehicleId";
+        private const string QueryGetById = "SELECT * FROM Vehicles WHERE VehicleId = @id";
 
         private const string QueryUpdate = "UPDATE Vehicles SET" +
             "VehicleTypeId = @VehicleTypeId," +

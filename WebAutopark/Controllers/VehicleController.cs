@@ -1,6 +1,7 @@
 ﻿using DAL.Entities;
 using DAL.Interfaces;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,10 +12,13 @@ namespace WebAutopark.Controllers
     public class VehicleController : Controller
     {
         private readonly IRepository<Vehicle> _vehicleRepository;
+        private readonly IRepository<VehicleType> _vehicleTypeRepository;
 
-        public VehicleController(IRepository<Vehicle> vehicleRepository)
+        public VehicleController(IRepository<Vehicle> vehicleRepository, 
+            IRepository<VehicleType> vehicleTypeRepository)
         {
             _vehicleRepository = vehicleRepository;
+            _vehicleTypeRepository = vehicleTypeRepository;
         }
 
         [HttpGet]
@@ -34,8 +38,10 @@ namespace WebAutopark.Controllers
         }
 
         [HttpGet]
-        public IActionResult Create()
+        public async Task<IActionResult> Create()
         {
+            var vehicleTypes = await _vehicleTypeRepository.GetAll();
+            ViewBag.vehicleTypes = new SelectList(vehicleTypes, "VehicleTypeId", "Name");
             return View();
         }
 
@@ -43,9 +49,13 @@ namespace WebAutopark.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(Vehicle vehicle)
         {
-            await _vehicleRepository.Create(vehicle);
+            if (ModelState.IsValid)
+            {
+                await _vehicleRepository.Create(vehicle);
+                return RedirectToAction("Index");
+            }
 
-            return RedirectToAction("Index");
+            return View();
         }
 
         [HttpGet]
@@ -56,22 +66,34 @@ namespace WebAutopark.Controllers
             return View(vehicle);
         }
 
-        [HttpPut]
+        [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Update(Vehicle vehicle)
         {
-            await _vehicleRepository.Update(vehicle);
+            if(ModelState.IsValid)
+            {
+                await _vehicleRepository.Update(vehicle);
+                return RedirectToAction("Index");
+            }
 
-            return RedirectToAction("Index");
+            return View();
         }
 
-        [HttpDelete]
+        [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Delete(int id)
         {
             await _vehicleRepository.Delete(id);
 
             return RedirectToAction("Index");
+        }
+        [HttpGet]
+        [ActionName("Delete")]
+        public async Task<IActionResult> ConfirmDelete(int id)
+        {
+            var vehicle = await _vehicleRepository.GetById(id);
+
+            return View(vehicle);
         }
     }
 }

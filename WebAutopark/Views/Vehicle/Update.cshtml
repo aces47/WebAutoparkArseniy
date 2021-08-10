@@ -1,4 +1,5 @@
-﻿@model DAL.Entities.Vehicle
+﻿@using DAL.Entities 
+@model DAL.Entities.Vehicle
 
 @{
     ViewData["Title"] = "WebAutopark|Update Vehicle";
@@ -14,7 +15,9 @@
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
                 <label asp-for="VehicleTypeId" class="control-label"></label>
-                <input asp-for="VehicleTypeId" class="form-control" />
+                @Html.DropDownListFor(vt => vt.VehicleTypeId,
+               ViewBag.vehicleTypes as IEnumerable<SelectListItem>,
+               htmlAttributes: new { @class = "form-control" })
                 <span asp-validation-for="VehicleTypeId" class="text-danger"></span>
             </div>
             <div class="form-group">
@@ -74,7 +77,8 @@
             </div>
             <div class="form-group">
                 <label asp-for="Color" class="control-label"></label>
-                <input asp-for="Color" class="form-control" />
+                @Html.DropDownListFor(c => c.Color, Html.GetEnumSelectList<Color>(),
+               htmlAttributes: new { @class = "form-control" })
                 <span asp-validation-for="Color" class="text-danger"></span>
             </div>
             <div class="form-group">
