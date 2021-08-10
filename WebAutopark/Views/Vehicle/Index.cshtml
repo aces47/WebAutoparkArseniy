@@ -1,0 +1,108 @@
+﻿@model IEnumerable<DAL.Entities.Vehicle>
+
+@{
+    ViewData["Title"] = "WebAutopark|Vehicle List";
+}
+
+<h1>Vehicle List</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table w-auto">
+    <thead>
+        <tr>
+            <th scope="col" class="text-center">
+                @Html.DisplayNameFor(model => model.VehicleTypeId)
+            </th>
+            <th scope="col" class="text-center">
+                @Html.DisplayNameFor(model => model.ModelName)
+            </th>
+            <th scope="col" class="text-center">
+                @Html.DisplayNameFor(model => model.StateNumber)
+            </th>
+            <th scope="col" class="text-center">
+                @Html.DisplayNameFor(model => model.ManufactureYear)
+            </th>
+            <th scope="col" class="text-center">
+                @Html.DisplayNameFor(model => model.Mileage)
+            </th>
+            <th scope="col" class="text-center">
+                @Html.DisplayNameFor(model => model.Weight)
+            </th>
+            <th scope="col" class="text-center">
+                @Html.DisplayNameFor(model => model.EngineType)
+            </th>
+            <th scope="col" class="text-center">
+                @Html.DisplayNameFor(model => model.EngineCapacity)
+            </th>
+            <th scope="col" class="text-center">
+                @Html.DisplayNameFor(model => model.EngineConsumption)
+            </th>
+            <th scope="col" class="text-center">
+                @Html.DisplayNameFor(model => model.TankCapacity)
+            </th>
+            <th scope="col" class="text-center">
+                @Html.DisplayNameFor(model => model.TaxPerMonth)
+            </th>
+            <th scope="col" class="text-center">
+                @Html.DisplayNameFor(model => model.MaxKm)
+            </th>
+            <th scope="col" class="text-center">
+                @Html.DisplayNameFor(model => model.Color)
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.HiddenFor(modelItem => item.VehicleId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.VehicleType.Name)
+            </td>
+            <td>
+                @Html.ActionLink(item.ModelName, "Details", new { id = item.VehicleId })
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.StateNumber)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ManufactureYear)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Mileage)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Weight)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.EngineType)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.EngineCapacity)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.EngineConsumption)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.TankCapacity)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.TaxPerMonth)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.MaxKm)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Color)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new {  id=item.VehicleId }) |
+                @Html.ActionLink("Delete", "Delete", new { id = item.VehicleId })
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
