@@ -12,9 +12,6 @@
 <table class="table">
     <thead>
         <tr>
-            <th hidden>
-                @Html.DisplayNameFor(model => model.DetailId)
-            </th>
             <th>
                 @Html.DisplayNameFor(model => model.Name)
             </th>
@@ -24,9 +21,6 @@
     <tbody>
 @foreach (var item in Model) {
         <tr>
-            <td hidden>
-                @Html.HiddenFor(modelItem => item.DetailId)
-            </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Name)
             </td>
