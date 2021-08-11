@@ -25,9 +25,6 @@
         @foreach (var item in Model)
         {
             <tr>
-                <td hidden>
-                    @Html.HiddenFor(modelItem => item.VehicleTypeId)
-                </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.Name)
                 </td>
