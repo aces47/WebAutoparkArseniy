@@ -14,6 +14,9 @@
         <form asp-action="Update">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
+                <input asp-for="VehicleId" hidden readonly/>
+            </div>
+            <div class="form-group">
                 <label asp-for="VehicleTypeId" class="control-label"></label>
                 @Html.DropDownListFor(vt => vt.VehicleTypeId,
                ViewBag.vehicleTypes as IEnumerable<SelectListItem>,

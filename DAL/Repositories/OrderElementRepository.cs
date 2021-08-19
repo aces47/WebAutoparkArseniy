@@ -11,19 +11,19 @@ namespace DAL.Repositories
 {
     public class OrderElementRepository : BaseRepository, IRepository<OrderElement>
     {
-        private const string QueryCreate = "INSERT INTO OrderElements(OrderId, DetailId, DetailCount) "
+        private const string QueryCreate = "INSERT INTO OrdersElements(OrderId, DetailId, DetailCount) "
                                        + "VALUES (@OrderId, @DetailId, @DetailCount)";
 
         private const string QueryDelete = "DELETE FROM OrderElements WHERE OrderElementId = @OrderElementId";
 
-        private const string QueryGetAll = "SELECT D.Name, OE.OrderId,OE.DetailCount" +
-            "FROM OrderElements AS OE" +
+        private const string QueryGetAll = "SELECT D.DetailId AS DId,D.Name, OE.OrderId,OE.DetailCount " +
+            "FROM OrdersElements AS OE " +
             "JOIN Details AS D ON OE.DetailId=D.DetilId";
 
-        private const string QueryGetById = "SELECT D.Name, OE.OrderId,OE.DetailCount" +
-            "FROM OrderElements AS OE" +
-            "JOIN Details AS D ON OE.DetailId=D.DetilId" +
-            "WHERE OrderElementId = @OrderElementId";
+        private const string QueryGetById = "SELECT D.DetailId AS DId,D.Name, OE.OrderId,OE.DetailCount " +
+            "FROM OrderElements AS OE " +
+            "JOIN Details AS D ON OE.DetailId=D.DetilId " +
+            "WHERE OrdersElementId = @OrderElementId";
 
         private const string QueryUpdate = "UPDATE OrderElements "
                                        + "SET OrderId = @OrderId, DetailId = @DetailId, DetailCount = @DetailCount "
@@ -43,7 +43,7 @@ namespace DAL.Repositories
                      orderElement.Part = detail;
                      return orderElement;
                  },
-                splitOn: "DDetailId"
+                splitOn: "DId"
             );
 
         public async Task<OrderElement> GetById(int id)
@@ -55,7 +55,7 @@ namespace DAL.Repositories
                     orderElement.Part = detail;
                     return orderElement;
                 },
-                splitOn: "DDetailId",
+                splitOn: "DId",
                 param: new { id }
             );
 

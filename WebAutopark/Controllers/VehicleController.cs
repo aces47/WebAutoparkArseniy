@@ -1,5 +1,6 @@
 ﻿using DAL.Entities;
 using DAL.Interfaces;
+using DAL.DTO;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using System;
@@ -22,9 +23,23 @@ namespace WebAutopark.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(SortOrder sortOrder)
         {
+            ViewData["NameSort"] = sortOrder == SortOrder.NameAsc ? SortOrder.NameDesc : SortOrder.NameAsc;
+            ViewData["TypeSort"] = sortOrder == SortOrder.TypeAsc ? SortOrder.TypeDesc : SortOrder.TypeAsc;
+            ViewData["MileageSort"] = sortOrder == SortOrder.MileageAsc ? SortOrder.MileageDesc : SortOrder.MileageAsc;
             var vehicles = (await _vehicleRepository.GetAll()).OrderBy(e => e.VehicleId);
+
+            vehicles = sortOrder switch
+            {
+                SortOrder.NameAsc => vehicles.OrderBy(v => v.ModelName),
+                SortOrder.NameDesc => vehicles.OrderByDescending(v => v.ModelName),
+                SortOrder.TypeAsc => vehicles.OrderBy(v => v.VehicleType.Name),
+                SortOrder.TypeDesc => vehicles.OrderByDescending(v => v.VehicleType.Name),
+                SortOrder.MileageAsc => vehicles.OrderBy(v => v.Mileage),
+                SortOrder.MileageDesc => vehicles.OrderByDescending(v => v.Mileage),
+                _ => vehicles.OrderBy(v => v.VehicleId)
+            };
 
             return View(vehicles);
         }
@@ -62,6 +77,8 @@ namespace WebAutopark.Controllers
         public async Task<IActionResult> Update(int id)
         {
             var vehicle = await _vehicleRepository.GetById(id);
+            var vehicleTypes = await _vehicleTypeRepository.GetAll();
+            ViewBag.vehicleTypes = new SelectList(vehicleTypes, "VehicleTypeId", "Name");
 
             return View(vehicle);
         }

@@ -13,10 +13,14 @@
     <thead>
         <tr>
             <th scope="col" class="text-center">
-                @Html.DisplayNameFor(model => model.VehicleTypeId)
+                <a asp-action="Index" asp-route-sortOrder="@ViewBag.TypeSort">
+                    @Html.DisplayNameFor(model => model.VehicleTypeId)
+                </a>
             </th>
             <th scope="col" class="text-center">
-                @Html.DisplayNameFor(model => model.ModelName)
+                <a asp-action="Index" asp-route-sortOrder="@ViewBag.NameSort">
+                    @Html.DisplayNameFor(model => model.ModelName)
+                </a>
             </th>
             <th scope="col" class="text-center">
                 @Html.DisplayNameFor(model => model.StateNumber)
@@ -25,7 +29,9 @@
                 @Html.DisplayNameFor(model => model.ManufactureYear)
             </th>
             <th scope="col" class="text-center">
-                @Html.DisplayNameFor(model => model.Mileage)
+                <a asp-action="Index" asp-route-sortOrder="@ViewBag.MileageSort">
+                    @Html.DisplayNameFor(model => model.Mileage)
+                </a>
             </th>
             <th scope="col" class="text-center">
                 @Html.DisplayNameFor(model => model.Weight)
@@ -54,55 +60,58 @@
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.HiddenFor(modelItem => item.VehicleId)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.VehicleType.Name)
-            </td>
-            <td>
-                @Html.ActionLink(item.ModelName, "Details", new { id = item.VehicleId })
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.StateNumber)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ManufactureYear)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Mileage)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Weight)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.EngineType)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.EngineCapacity)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.EngineConsumption)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.TankCapacity)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.TaxPerMonth)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.MaxKm)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Color)
-            </td>
-            <td>
-                @Html.ActionLink("Edit", "Edit", new {  id=item.VehicleId }) |
-                @Html.ActionLink("Delete", "Delete", new { id = item.VehicleId })
-            </td>
-        </tr>
-}
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.VehicleType.Name)
+                </td>
+                <td>
+                    @Html.ActionLink(item.ModelName, "Details", new { id = item.VehicleId })
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.StateNumber)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ManufactureYear)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Mileage)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Weight)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.EngineType)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.EngineCapacity)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.EngineConsumption)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.TankCapacity)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.TaxPerMonth)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.MaxKm)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Color)
+                </td>
+                <td>
+                    @Html.ActionLink("Edit", "Update", new { id = item.VehicleId }, new { @class = "btn btn-link" }) |
+                    @Html.ActionLink("Delete", "Delete", new { id = item.VehicleId }, new { @class = "btn btn-link" }) |
+                    @using (Html.BeginForm("Create", "Order", new { id = item.VehicleId }, FormMethod.Post))
+                    {
+                        @Html.TextBoxFor(v=>item.VehicleId, new { @readonly = "readonly", @hidden = "hidden" })
+                        <button type="submit" class="btn btn-link">Create order</button>
+                    }
+                </td>
+            </tr>
+        }
     </tbody>
 </table>

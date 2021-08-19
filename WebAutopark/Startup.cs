@@ -32,7 +32,7 @@ namespace WebAutopark
             services.AddScoped<IRepository<VehicleType>, VehicleTypeRepository>(provider => new VehicleTypeRepository(connectionString));
             services.AddScoped<IRepository<Vehicle>, VehicleRepository>(provider => new VehicleRepository(connectionString));
             services.AddScoped<IRepository<Detail>, DetailRepository>(provider => new DetailRepository(connectionString));
-            services.AddScoped<IRepository<Order>, OrderRepository>(provider => new OrderRepository(connectionString));
+            services.AddScoped<IOrderRepositoryExt, OrderRepository>(provider => new OrderRepository(connectionString));
             services.AddControllersWithViews();
         }
 
