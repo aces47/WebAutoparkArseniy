@@ -77,6 +77,7 @@ namespace WebAutopark.Controllers
         }
 
         [ActionName("Delete")]
+        [HttpGet]
         public async Task<IActionResult> ConfirmDelete(int id)
         {
             var vehicleType = await _vehicleTypeRepository.GetById(id);

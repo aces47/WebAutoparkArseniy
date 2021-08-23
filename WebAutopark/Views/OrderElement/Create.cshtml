@@ -1,0 +1,40 @@
+﻿@model DAL.Entities.OrderElement
+@using DAL.Entities
+
+<h4>OrderElement</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="OrderId" class="control-label"></label>
+                <input asp-for="OrderId" class="form-control" readonly />
+
+            </div>
+            <div class="form-group">
+                <label asp-for="DetailId" class="control-label"></label>
+                @Html.DropDownListFor(oe => oe.DetailId,
+                 ViewBag.Details as IEnumerable<SelectListItem>,
+                 htmlAttributes: new { @class = "form-control" })
+                <span asp-validation-for="DetailId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="DetailCount" class="control-label"></label>
+                <input asp-for="DetailCount" class="form-control" />
+                <span asp-validation-for="DetailCount" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a class="btn btn-link" asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

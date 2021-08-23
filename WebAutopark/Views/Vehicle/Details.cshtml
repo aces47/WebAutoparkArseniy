@@ -1,0 +1,101 @@
+﻿@model DAL.Entities.Vehicle
+
+@{
+    ViewData["Title"] = "WebAutopark|Vehicle Details";
+}
+
+<h1>Vehicle Details</h1>
+
+<div>
+    <h4>Vehicle</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.VehicleTypeId)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.VehicleType.Name)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.ModelName)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.ModelName)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.StateNumber)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.StateNumber)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.ManufactureYear)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.ManufactureYear)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Mileage)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Mileage)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Weight)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Weight)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.EngineType)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.EngineType)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.EngineCapacity)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.EngineCapacity)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.EngineConsumption)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.EngineConsumption)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.TankCapacity)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.TankCapacity)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.TaxPerMonth)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.TaxPerMonth)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.MaxKm)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.MaxKm)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Color)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Color)
+        </dd>
+    </dl>
+</div>
+<div>
+    @Html.ActionLink("Edit", "Update", new { id = Model.VehicleId }, new { @class = "btn btn-link" }) |
+    <a class="btn btn-link" asp-action="Index">Back to List</a> |
+    @using (Html.BeginForm("Create", "Order", new { id = Model.VehicleId }, FormMethod.Post))
+    {
+        @Html.TextBoxFor(v=>v.VehicleId, new { @readonly = "readonly", @hidden = "hidden" })
+        <button type="submit" class="btn btn-link">Create order</button>
+    }
+</div>

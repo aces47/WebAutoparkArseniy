@@ -76,6 +76,7 @@ namespace WebAutopark.Controllers
         }
 
         [ActionName("Delete")]
+        [HttpGet]
         public async Task<IActionResult> ConfirmDelete(int id)
         {
             var detail = await _detailRepository.GetById(id);

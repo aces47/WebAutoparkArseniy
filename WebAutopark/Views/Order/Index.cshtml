@@ -1,0 +1,44 @@
+﻿@model IEnumerable<DAL.Entities.Order>
+
+@{
+    ViewData["Title"] = "Web Autopark|Orders";
+}
+
+<h1>Orders List</h1>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.OrderId)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Vehicle.ModelName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Vehicle.StateNumber)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model=>model.OrderElements)
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(it=>item.OrderId)
+            </td>
+            <td>
+                @Html.DisplayFor(it=>item.Vehicle.ModelName)
+            </td>
+            <td>
+                @Html.DisplayFor(it=>item.Vehicle.StateNumber)
+            </td>
+            <td>
+                @Html.ActionLink("Details", "Details", new { id = item.OrderId })
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

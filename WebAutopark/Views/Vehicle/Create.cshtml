@@ -1,0 +1,87 @@
+﻿@using DAL.Entities
+@model DAL.Entities.Vehicle
+
+@{
+    ViewData["Title"] = "WebAutopark|Create Vehicle";
+}
+
+<h1>Create</h1>
+
+<h4>Vehicle</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="VehicleTypeId" class="control-label"></label>
+                @Html.DropDownListFor(vt => vt.VehicleTypeId,
+               ViewBag.vehicleTypes as IEnumerable<SelectListItem>,
+              htmlAttributes: new { @class = "form-control" })
+                <span asp-validation-for="VehicleTypeId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ModelName" class="control-label"></label>
+                <input asp-for="ModelName" class="form-control" />
+                <span asp-validation-for="ModelName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="StateNumber" class="control-label"></label>
+                <input asp-for="StateNumber" class="form-control" />
+                <span asp-validation-for="StateNumber" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ManufactureYear" class="control-label"></label>
+                <input asp-for="ManufactureYear" class="form-control" />
+                <span asp-validation-for="ManufactureYear" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Mileage" class="control-label"></label>
+                <input asp-for="Mileage" class="form-control" />
+                <span asp-validation-for="Mileage" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Weight" class="control-label"></label>
+                <input asp-for="Weight" class="form-control" />
+                <span asp-validation-for="Weight" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="EngineType" class="control-label"></label>
+                <input asp-for="EngineType" class="form-control" />
+                <span asp-validation-for="EngineType" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="EngineCapacity" class="control-label"></label>
+                <input asp-for="EngineCapacity" class="form-control" />
+                <span asp-validation-for="EngineCapacity" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="EngineConsumption" class="control-label"></label>
+                <input asp-for="EngineConsumption" class="form-control" />
+                <span asp-validation-for="EngineConsumption" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="TankCapacity" class="control-label"></label>
+                <input asp-for="TankCapacity" class="form-control" />
+                <span asp-validation-for="TankCapacity" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Color" class="control-label"></label>
+                @Html.DropDownListFor(c => c.Color, Html.GetEnumSelectList<Color>(),
+               htmlAttributes: new { @class = "form-control" })
+                <span asp-validation-for="Color" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
