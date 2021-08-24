@@ -64,7 +64,7 @@ namespace DAL.Repositories
             var ordering = GetOrdering(sortOrder);
 
             return await connection.QueryAsync<Vehicle, VehicleType, Vehicle>(
-                QueryGetAll + $"ORDER BY {ordering.Item1} {ordering.Item2}",
+                QueryGetAll + $" ORDER BY {ordering.Item1} {ordering.Item2}",
                 (vehicle, vehicleType) =>
                 {
                     vehicle.VehicleType = vehicleType;
@@ -78,13 +78,14 @@ namespace DAL.Repositories
         {
             var result = sortOrder switch
             {
-                SortOrder.NameAsc => ("ModelName", "ASC"),
-                SortOrder.NameDesc => ("ModelName", "DESC"),
+                SortOrder.NameAsc => ("V.ModelName", "ASC"),
+                SortOrder.NameDesc => ("V.ModelName", "DESC"),
                 SortOrder.TypeAsc => ("VT.Name", "ASC"),
                 SortOrder.TypeDesc => ("VT.Name", "DESC"),
-                SortOrder.MileageAsc => ("Mileage", "ASC"),
-                SortOrder.MileageDesc => ("Mi;eage", "DESC"),
-                _ => ("Id", "ASC")
+                SortOrder.MileageAsc => ("V.Mileage", "ASC"),
+                SortOrder.MileageDesc => ("V.Mileage", "DESC"),
+                SortOrder.IdAsc => ("V.VehicleId", "ASC"),
+                _ => ("V.VehicleId","DESC")
             };
 
             return result;

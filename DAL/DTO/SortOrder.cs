@@ -8,6 +8,7 @@ namespace DAL.DTO
 {
     public enum SortOrder
     {
+        IdAsc,
         NameAsc,
         NameDesc,
         TypeAsc,
