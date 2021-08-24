@@ -3,13 +3,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using DAL.DTO;
 using DAL.Entities;
 using DAL.Interfaces;
 using Dapper;
 
 namespace DAL.Repositories
 {
-    public class VehicleRepository : BaseRepository, IRepository<Vehicle>
+    public class VehicleRepository : BaseRepository, IVehicleRepository
     {
         private const string QueryCreate = "INSERT INTO Vehicles (" +
             "VehicleTypeId, ModelName, StateNumber, ManufactureYear, Mileage, Weight, EngineType," +
@@ -56,6 +57,37 @@ namespace DAL.Repositories
                 },
                 splitOn:"VTId"
                 );
+        }
+
+        public async Task<IEnumerable<Vehicle>> GetAll(SortOrder sortOrder)
+        {
+            var ordering = GetOrdering(sortOrder);
+
+            return await connection.QueryAsync<Vehicle, VehicleType, Vehicle>(
+                QueryGetAll + $"ORDER BY {ordering.Item1} {ordering.Item2}",
+                (vehicle, vehicleType) =>
+                {
+                    vehicle.VehicleType = vehicleType;
+                    return vehicle;
+                },
+                splitOn: "VTId"
+                );
+        }
+
+        private (string,string) GetOrdering(SortOrder sortOrder)
+        {
+            var result = sortOrder switch
+            {
+                SortOrder.NameAsc => ("ModelName", "ASC"),
+                SortOrder.NameDesc => ("ModelName", "DESC"),
+                SortOrder.TypeAsc => ("VT.Name", "ASC"),
+                SortOrder.TypeDesc => ("VT.Name", "DESC"),
+                SortOrder.MileageAsc => ("Mileage", "ASC"),
+                SortOrder.MileageDesc => ("Mi;eage", "DESC"),
+                _ => ("Id", "ASC")
+            };
+
+            return result;
         }
 
         public async Task<Vehicle> GetById(int id)

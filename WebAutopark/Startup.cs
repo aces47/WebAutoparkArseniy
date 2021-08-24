@@ -30,9 +30,9 @@ namespace WebAutopark
             string connectionString = Configuration.GetConnectionString("DefaultConnection");
             services.AddScoped<IRepository<OrderElement>, OrderElementRepository>(provider => new OrderElementRepository(connectionString));
             services.AddScoped<IRepository<VehicleType>, VehicleTypeRepository>(provider => new VehicleTypeRepository(connectionString));
-            services.AddScoped<IRepository<Vehicle>, VehicleRepository>(provider => new VehicleRepository(connectionString));
+            services.AddScoped<IVehicleRepository, VehicleRepository>(provider => new VehicleRepository(connectionString));
             services.AddScoped<IRepository<Detail>, DetailRepository>(provider => new DetailRepository(connectionString));
-            services.AddScoped<IOrderRepositoryExt, OrderRepository>(provider => new OrderRepository(connectionString));
+            services.AddScoped<IOrderRepository, OrderRepository>(provider => new OrderRepository(connectionString));
             services.AddControllersWithViews();
         }
 

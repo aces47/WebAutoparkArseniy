@@ -9,7 +9,7 @@ using Dapper;
 
 namespace DAL.Repositories
 {
-    public class OrderRepository : BaseRepository, IOrderRepositoryExt
+    public class OrderRepository : BaseRepository, IOrderRepository
     {
         private const string QueryCreate = "INSERT INTO Orders (VehicleId) VALUES(@VehicleId)";
         private const string QueryCreateReturn = "INSERT INTO Orders (VehicleId) " +

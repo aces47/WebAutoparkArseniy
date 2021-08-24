@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace DAL.Interfaces
 {
-    public interface IOrderRepositoryExt :IRepository<Order>
+    public interface IOrderRepository :IRepository<Order>
     {
         Task<Order> CreateReturn(Order item);
     }

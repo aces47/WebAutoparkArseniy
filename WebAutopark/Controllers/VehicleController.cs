@@ -12,10 +12,10 @@ namespace WebAutopark.Controllers
 {
     public class VehicleController : Controller
     {
-        private readonly IRepository<Vehicle> _vehicleRepository;
+        private readonly IVehicleRepository _vehicleRepository;
         private readonly IRepository<VehicleType> _vehicleTypeRepository;
 
-        public VehicleController(IRepository<Vehicle> vehicleRepository, 
+        public VehicleController(IVehicleRepository vehicleRepository, 
             IRepository<VehicleType> vehicleTypeRepository)
         {
             _vehicleRepository = vehicleRepository;
@@ -28,18 +28,7 @@ namespace WebAutopark.Controllers
             ViewData["NameSort"] = sortOrder == SortOrder.NameAsc ? SortOrder.NameDesc : SortOrder.NameAsc;
             ViewData["TypeSort"] = sortOrder == SortOrder.TypeAsc ? SortOrder.TypeDesc : SortOrder.TypeAsc;
             ViewData["MileageSort"] = sortOrder == SortOrder.MileageAsc ? SortOrder.MileageDesc : SortOrder.MileageAsc;
-            var vehicles = (await _vehicleRepository.GetAll()).OrderBy(e => e.VehicleId);
-
-            vehicles = sortOrder switch
-            {
-                SortOrder.NameAsc => vehicles.OrderBy(v => v.ModelName),
-                SortOrder.NameDesc => vehicles.OrderByDescending(v => v.ModelName),
-                SortOrder.TypeAsc => vehicles.OrderBy(v => v.VehicleType.Name),
-                SortOrder.TypeDesc => vehicles.OrderByDescending(v => v.VehicleType.Name),
-                SortOrder.MileageAsc => vehicles.OrderBy(v => v.Mileage),
-                SortOrder.MileageDesc => vehicles.OrderByDescending(v => v.Mileage),
-                _ => vehicles.OrderBy(v => v.VehicleId)
-            };
+            var vehicles = (await _vehicleRepository.GetAll(sortOrder));
 
             return View(vehicles);
         }
